@@ -1,8 +1,14 @@
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { hospitalInfo } from '../helpers'
+import { Icon } from 'leaflet'
 
 export const Mapa = () => {
+  const customIcon = new Icon({
+    iconUrl: ' /markerPosition.png',
+    iconSize: [36, 36],
+  })
+
   return (
     <div className='max-h-100 max-w-100'>
       <MapContainer
@@ -16,8 +22,8 @@ export const Mapa = () => {
         />
 
         {hospitalInfo.map((hospital) => (
-          <>
-            <Marker position={hospital.geometry.coordinates}>
+          <div key={hospital.properties.ID}>
+            <Marker position={hospital.geometry.coordinates} icon={customIcon}>
               <Popup>
                 <p>
                   <span className='font-extrabold'>Nombre:</span>{' '}
@@ -29,7 +35,7 @@ export const Mapa = () => {
                 </p>
               </Popup>
             </Marker>
-          </>
+          </div>
         ))}
       </MapContainer>
     </div>
