@@ -1,0 +1,7 @@
+Tecnologías Usadas para el proyecto:
+-React
+-Redux
+-Vite
+-Github
+-Tailwind (flowbite)
+-Yarn
