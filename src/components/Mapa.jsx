@@ -19,10 +19,13 @@ export const Mapa = () => {
           <>
             <Marker position={hospital.geometry.coordinates}>
               <Popup>
-                <p>Nombre: {hospital.properties.NOMBRE}</p>
                 <p>
-                  Calle: {hospital.properties.CALLE}{' '}
-                  {hospital.properties.ALTURA}
+                  <span className='font-extrabold'>Nombre:</span>{' '}
+                  {hospital.properties.NOMBRE}
+                </p>
+                <p>
+                  <span className='font-extrabold'>Calle:</span>{' '}
+                  {hospital.properties.CALLE} {hospital.properties.ALTURA}
                 </p>
               </Popup>
             </Marker>
