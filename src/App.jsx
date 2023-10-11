@@ -1,6 +1,6 @@
 import { Home } from './pages'
 
-function App() {
+export const App = () => {
   return (
     <>
       <Home />
@@ -10,5 +10,3 @@ function App() {
     </>
   )
 }
-
-export default App 
