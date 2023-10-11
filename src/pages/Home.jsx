@@ -3,7 +3,7 @@ import { Navbar } from '../components'
 export const Home = () => {
   return (
     <>
-      <Navbar />
+      <p>Hola</p>
     </>
   )
 }
