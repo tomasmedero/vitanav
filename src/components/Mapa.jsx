@@ -6,7 +6,7 @@ import { Icon } from 'leaflet'
 export const Mapa = () => {
   const customIcon = new Icon({
     iconUrl: ' /markerPosition.png',
-    iconSize: [36, 36],
+    iconSize: [34, 34],
   })
 
   return (
