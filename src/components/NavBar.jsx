@@ -64,7 +64,13 @@ export const Navbar = () => {
               <button
                 onClick={toggleDropdownProfile}
                 className=' flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300'
-              ></button>
+              >
+                <img
+                  className='w-8 h-8 rounded-full'
+                  src='/default-avatar.png'
+                  alt='Avatar'
+                />
+              </button>
             </div>
 
             {isOpenProfile && (
