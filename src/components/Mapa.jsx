@@ -16,10 +16,11 @@ export const Mapa = () => {
         zoom={13}
         scrollWheelZoom={true}
       >
-        <TileLayer
+        {/* <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+        /> */}
+        <TileLayer url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png" />
 
         {hospitalInfo.map((hospital) => (
           <div key={hospital.properties.ID}>
