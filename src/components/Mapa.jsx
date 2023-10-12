@@ -31,8 +31,26 @@ export const Mapa = () => {
                   {hospital.properties.NOMBRE}
                 </p>
                 <p>
-                  <span className="font-extrabold">Calle:</span>{" "}
+                  <span className="font-extrabold">Dirección:</span>{" "}
                   {hospital.properties.CALLE} {hospital.properties.ALTURA}
+                </p>
+                <p>
+                  <span className="font-extrabold">Teléfono:</span>{" "}
+                  {hospital.properties.TELEFONO}
+                </p>
+                {hospital.properties.WEB && (
+                  <p>
+                    <span className="font-extrabold">Web:</span>{" "}
+                    {hospital.properties.WEB}
+                  </p>
+                )}
+                <p>
+                  <span className="font-extrabold">Especialidad:</span>{" "}
+                  {hospital.properties.TIPO_ESPEC}
+                </p>
+                <p>
+                  <span className="font-extrabold">Pacientes en espera:</span>{" "}
+                  81
                 </p>
               </Popup>
             </Marker>
