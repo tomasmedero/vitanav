@@ -2,6 +2,11 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { hospitalInfo } from "../helpers";
 import { Icon } from "leaflet";
+// TODO: Intentar trabar el zoom o el recorrido
+// Implementar base de datos tiempo real para info de pacientes
+// Terminar about us
+// Estilar navbar
+// Implementar primera vista division de establecimiento o paciente
 
 export const Mapa = () => {
   const customIcon = new Icon({
@@ -38,19 +43,15 @@ export const Mapa = () => {
                   <span className="font-extrabold">Teléfono:</span>{" "}
                   {hospital.properties.TELEFONO}
                 </p>
-                {hospital.properties.WEB && (
-                  <p>
-                    <span className="font-extrabold">Web:</span>{" "}
-                    {hospital.properties.WEB}
-                  </p>
-                )}
                 <p>
                   <span className="font-extrabold">Especialidad:</span>{" "}
                   {hospital.properties.TIPO_ESPEC}
                 </p>
                 <p>
-                  <span className="font-extrabold">Pacientes en espera:</span>{" "}
-                  81
+                  <span className="font-extrabold text-lg">
+                    Pacientes en espera:
+                  </span>{" "}
+                  <span className="text-lg font-bold text-yellow-500">6</span>
                 </p>
               </Popup>
             </Marker>
