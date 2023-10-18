@@ -51,7 +51,7 @@ export const Mapa = () => {
                   <span className="font-extrabold text-lg">
                     Pacientes en espera:
                   </span>{" "}
-                  <span className="text-lg text-rose-950">12</span>
+                  <span className="text-lg font-bold text-yellow-500">6</span>
                 </p>
               </Popup>
             </Marker>
