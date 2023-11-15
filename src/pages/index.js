@@ -1,2 +1,5 @@
-export * from './AboutUs'
-export * from './Home'
+export * from './AboutUsPage'
+export * from './AdminPage'
+export * from './HomePage'
+export * from './LoadingPage'
+export * from './MapPage'

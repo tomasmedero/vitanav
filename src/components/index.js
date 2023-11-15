@@ -1,3 +1,4 @@
-export * from './Mapa';
-export * from './NavBar';
-export * from './index';
+export * from './AdminComponent'
+export * from './HomeComponent'
+export * from './MapComponent'
+export * from './NavBar'

@@ -1,9 +1,9 @@
-import { Home } from "./pages";
+import { HomePage } from './pages'
 
 export const App = () => {
   return (
     <>
-      <Home />
+      <HomePage />
     </>
-  );
-};
+  )
+}
