@@ -5,6 +5,47 @@
 
 
 .leaflet-container {
-  height: 100vh;
-  width: 100%;
+    height: 100vh;
+    width: 100%;
+}
+
+.divCounter {
+    text-align: "center";
+    padding: "20px";
+    margin: "20px";
+    border-radius: "5px";
+    box-shadow: "0 4px 8px rgba(0, 0, 0, 0.1)";
+}
+
+.homeContainer {
+    max-width: 100%;
+    display: flex;
+}
+
+.divHome1 {
+    max-width: 49%;
+    margin: 0 2rem;
+    padding: 0 2rem;
+}
+
+.divHome2 {
+    display: flex;
+    flex-direction: row-reverse;
+    max-width: 50%;
+    width: 50%;
+}
+
+.divAbout {
+    display: flex;
+    justify-content: space-around;
+}
+
+.article1 {
+    width: 40%;
+}
+
+.article2 {
+    width: 40%;
+    display: flex;
+    justify-content: flex-end;
 }
