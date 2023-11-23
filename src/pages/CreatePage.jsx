@@ -1,26 +1,135 @@
-export const CreatePage = () => {
-  const { register, handleSubmit } = useForm()
+import { useForm } from 'react-hook-form'
+import { startSaveHospital } from '../store/hospital/thunks'
+import { useDispatch } from 'react-redux'
 
-  const onSubmit = (data) => console.log(data)
+export const CreatePage = () => {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: { pacientesEnEspera: 0 },
+  })
+  const dispatch = useDispatch()
+
+  const onSubmit = (data) => {
+    console.log(data)
+    dispatch(startSaveHospital({ data }))
+    reset()
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <label>Nombre:</label>
-      <input {...register('nombre')} />
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='p-6 space-y-4 bg-white shadow-md rounded-md'
+      autoComplete='off'
+    >
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Nombre:
+        </label>
+        <input
+          {...register('nombre', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.nombre && (
+          <p className='text-red-500 font-bold'>{errors.nombre.message}</p>
+        )}
+      </div>
 
-      <label>Dirección:</label>
-      <input {...register('direccion')} />
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Dirección:
+        </label>
+        <input
+          {...register('direccion', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.direccion && (
+          <p className='text-red-500 font-bold'>{errors.direccion.message}</p>
+        )}
+      </div>
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Latitud:
+        </label>
+        <input
+          {...register('latitud', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.latitud && (
+          <p className='text-red-500 font-bold'>{errors.latitud.message}</p>
+        )}
+      </div>
 
-      <label>Teléfono:</label>
-      <input {...register('telefono')} />
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Longitud:
+        </label>
+        <input
+          {...register('longitud', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.longitud && (
+          <p className='text-red-500 font-bold'>{errors.longitud.message}</p>
+        )}
+      </div>
 
-      <label>Especialidad:</label>
-      <input {...register('especialidad')} />
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Teléfono:
+        </label>
+        <input
+          {...register('telefono', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.telefono && (
+          <p className='text-red-500 font-bold'>{errors.telefono.message}</p>
+        )}
+      </div>
 
-      <label>Pacientes en Espera:</label>
-      <input {...register('pacientesEnEspera')} />
+      <div>
+        <label className='block text-sm font-medium text-gray-700'>
+          Especialidad:
+        </label>
+        <input
+          {...register('especialidad', {
+            required: 'Este valor es requerido',
+          })}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+        {errors.especialidad && (
+          <p className='text-red-500 font-bold'>
+            {errors.especialidad.message}
+          </p>
+        )}
+      </div>
 
-      <input type='submit' />
+      <div className='hidden'>
+        <label className='block text-sm font-medium text-gray-700'>
+          Pacientes en Espera:
+        </label>
+        <input
+          {...register('pacientesEnEspera')}
+          className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
+        />
+      </div>
+
+      <input
+        type='submit'
+        className='w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+      />
     </form>
   )
 }

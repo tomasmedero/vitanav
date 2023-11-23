@@ -4,14 +4,24 @@ export const hospitalSlice = createSlice({
   name: 'hospital',
   initialState: {
     isSaving: false,
-    info: [],
+    hospital: [],
     //active: null, Nota Chapa No sirve por ahora veremos
   },
   reducers: {
     savingNewHospital: (state) => {
       state.isSaving = true
     },
+    updateHospital: (state, action) => {
+      state.isSaving = false
+      state.hospital = state.hospital.map((hospital) => {
+        if (hospital.id === action.payload.id) {
+          return action.payload
+        }
+
+        return hospital
+      })
+    },
   },
 })
 
-export const { savingNewHospital } = hospitalSlice.actions
+export const { savingNewHospital, updateHospital } = hospitalSlice.actions
