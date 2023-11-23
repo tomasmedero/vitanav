@@ -1,4 +1,4 @@
 export * from './AdminComponent'
-export * from './HomeComponent'
+export * from './FooterComponent'
 export * from './MapComponent'
 export * from './NavBar'
