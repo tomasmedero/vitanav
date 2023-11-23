@@ -1,9 +1,9 @@
-import { HomeComponent } from '../components'
+import { HomeComponent } from "../components";
 
 export const HomePage = () => {
-  return (
-    <>
-      <HomeComponent />
-    </>
-  )
-}
+    return (
+        <>
+            <HomeComponent />
+        </>
+    );
+};

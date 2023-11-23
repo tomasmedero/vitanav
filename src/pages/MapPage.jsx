@@ -1,9 +1,9 @@
-import { MapComponent } from '../components'
+import { MapComponent } from "../components";
 
 export const MapPage = () => {
-  return (
-    <>
-      <MapComponent />
-    </>
-  )
-}
+    return (
+        <>
+            <MapComponent />
+        </>
+    );
+};
