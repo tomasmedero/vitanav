@@ -14,7 +14,6 @@ export const CreatePage = () => {
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
-    console.log(data)
     dispatch(startSaveHospital({ data }))
     reset()
   }

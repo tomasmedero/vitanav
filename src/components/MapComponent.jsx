@@ -8,6 +8,9 @@ import {
 import 'leaflet/dist/leaflet.css'
 import { hospitalInfo } from '../helpers'
 import { Icon } from 'leaflet'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { startLoadingHospitals } from '../store/hospital/thunks'
 // TODO:
 // Implementar base de datos tiempo real para info de pacientes
 // Implementar primera vista division de establecimiento o paciente
@@ -17,6 +20,14 @@ export const MapComponent = () => {
     iconUrl: ' /markerPosition.svg',
     iconSize: [34, 34],
   })
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(startLoadingHospitals())
+  }, [])
+
+  const { hospital } = useSelector((state) => state.hospital)
+  console.log(hospital)
 
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>
