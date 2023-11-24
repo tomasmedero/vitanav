@@ -6,7 +6,6 @@ export const LoadHospitals = async () => {
 
   const docs = await getDocs(collectionRef)
 
-  console.log(docs)
   const hospitals = []
   docs.forEach((doc) => {
     hospitals.push({ id: doc.id, ...doc.data() })

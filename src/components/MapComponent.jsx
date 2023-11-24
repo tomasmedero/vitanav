@@ -27,7 +27,6 @@ export const MapComponent = () => {
   }, [])
 
   const { hospital } = useSelector((state) => state.hospital)
-  console.log(hospital)
 
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>
