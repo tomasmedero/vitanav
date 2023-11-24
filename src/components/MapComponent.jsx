@@ -26,7 +26,7 @@ export const MapComponent = () => {
     dispatch(startLoadingHospitals())
   }, [])
 
-  const { hospital } = useSelector((state) => state.hospital)
+  const { hospitals } = useSelector((state) => state.hospital)
 
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>
@@ -42,31 +42,36 @@ export const MapComponent = () => {
         /> */}
         <TileLayer url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png' />
         <ZoomControl position='bottomright' />
-        {hospitalInfo.map((hospital) => (
-          <div key={hospital.properties.ID}>
-            <Marker position={hospital.geometry.coordinates} icon={customIcon}>
+        {hospitals.map((hospital) => (
+          <div key={hospital.id}>
+            <Marker
+              position={[hospital.latitud, hospital.longitud]}
+              icon={customIcon}
+            >
               <Popup>
                 <p>
-                  <span className='font-extrabold'>Nombre:</span>{' '}
-                  {hospital.properties.NOMBRE}
+                  <span className='font-extrabold'>Nombre:</span>
+                  {hospital.nombre}
                 </p>
                 <p>
-                  <span className='font-extrabold'>Dirección:</span>{' '}
-                  {hospital.properties.CALLE} {hospital.properties.ALTURA}
+                  <span className='font-extrabold'>Dirección:</span>
+                  {hospital.direccion}
                 </p>
                 <p>
-                  <span className='font-extrabold'>Teléfono:</span>{' '}
-                  {hospital.properties.TELEFONO}
+                  <span className='font-extrabold'>Teléfono:</span>
+                  {hospital.telefono}
                 </p>
                 <p>
-                  <span className='font-extrabold'>Especialidad:</span>{' '}
-                  {hospital.properties.TIPO_ESPEC}
+                  <span className='font-extrabold'>Especialidad:</span>
+                  {hospital.especialidad}
                 </p>
                 <p>
                   <span className='font-extrabold text-lg'>
                     Pacientes en espera:
-                  </span>{' '}
-                  <span className='text-lg font-bold text-yellow-500'>6</span>
+                  </span>
+                  <span className='text-lg font-bold text-yellow-500'>
+                    {hospital.pacientesEnEspera}
+                  </span>
                 </p>
               </Popup>
             </Marker>
