@@ -12,8 +12,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { startLoadingHospitals } from '../store/hospital/thunks'
 // TODO:
-// Implementar base de datos tiempo real para info de pacientes
-// Implementar primera vista division de establecimiento o paciente
+//EL Admin que puedas actualizar los pacientes en espera en tiempo real
+// Agregarle un boton al Admin
+//Hacer el login y register
 
 export const MapComponent = () => {
   const customIcon = new Icon({
@@ -36,10 +37,6 @@ export const MapComponent = () => {
         scrollWheelZoom={true}
         zoomControl={false}
       >
-        {/* <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        /> */}
         <TileLayer url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png' />
         <ZoomControl position='bottomright' />
         {hospitals.map((hospital) => (
