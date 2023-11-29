@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react"
 
 export const AdminComponent = () => {
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(0)
 
     const incrementCounter = () => {
-        setCount(count + 1);
-    };
+        setCount(count + 1)
+    }
 
     const decrementCounter = () => {
         if (count > 0) {
-            setCount(count - 1);
+            setCount(count - 1)
         }
-    };
+    }
 
     return (
         <>
-            <div className="divAdmin">
+            <div className="divAdmin bg-neutral-500 h-[79.8vh] flex flex-col justify-center">
                 <h2 className="text-3xl my-5 font-semibold text-center">
                     Hospital de emergencias psiquiatricas Torcuato de Alvear
                 </h2>
@@ -46,5 +46,5 @@ export const AdminComponent = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
