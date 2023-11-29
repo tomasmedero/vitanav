@@ -15,10 +15,10 @@ export const AdminComponent = () => {
 
     return (
         <>
-            <div className="divAdmin bg-neutral-500 h-[79.8vh] flex flex-col justify-center">
-                <h2 className="text-3xl my-5 font-semibold text-center">
+            <div className="divAdmin h-[79.8vh] flex flex-col justify-center">
+                <h1 className="text-3xl my-5 font-semibold text-center">
                     Hospital de emergencias psiquiatricas Torcuato de Alvear
-                </h2>
+                </h1>
                 {/* ACÁ VA EL NOMBRE DINAMICO DE CADA HOSPITAL */}
                 <p className="text-center">
                     Por favor actualice la lista de espera según las personas

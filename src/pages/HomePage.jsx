@@ -28,7 +28,7 @@ export const HomePage = () => {
                     </p>
                     <NavLink
                         to="/map"
-                        className="inline-block p-5 text-xl uppercase bg-red-600 font-bold text-white rounded-lg my-40 ml-10 hover:bg-red-800 transition-all hover:p-7"
+                        className="inline-block p-5 text-xl uppercase bg-red-600 font-bold text-white rounded-lg mt-10 ml-10 hover:bg-red-800 transition-all hover:p-7"
                     >
                         Ir al mapa de hospitales
                     </NavLink>
