@@ -8,24 +8,15 @@ import {
   LoadingPage,
   MapPage,
 } from '../pages'
-import { useEffect, useState } from 'react'
+import { AuthRoutes } from '../auth/routes/AuthRoutes'
 
 export const AppRouter = () => {
   const location = useLocation()
-  const path = location.pathname
 
-  const [isMap, setIsMap] = useState(false)
-
-  useEffect(() => {
-    if (path === '/map') {
-      setIsMap(true)
-    } else {
-      setIsMap(false)
-    }
-  }, [path])
+  const isMap = location.pathname === '/map'
 
   const status = 'checking2'
-  //Nota Chapa Editar el Loading Page
+  //TODO Chapa Editar el Loading Page
   // const status = useCheckAuth()  Nota Chapa hacer que funcione
   if (status === 'checking') {
     return <LoadingPage />
@@ -41,6 +32,7 @@ export const AppRouter = () => {
           <Route path='/about' element={<AboutUsPage />} />
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/createHospital' element={<CreatePage />} />
+          <Route path='/auth/*' element={<AuthRoutes />} />
           <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
         {!isMap && <FooterComponent />}
