@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom"
 export const HomePage = () => {
     return (
         <>
-            <section className="w-full flex flex-col md:flex-row h-[79.8vh]">
+            <section className="w-full flex flex-col md:flex-row h-[80.7vh]">
                 <article className="w-full md:w-1/2 mx-8 px-8">
                     <h1 className="text-5xl font-bold my-10 mx-5">
                         La ruta hacía tu bienestar

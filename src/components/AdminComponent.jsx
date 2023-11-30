@@ -15,7 +15,7 @@ export const AdminComponent = () => {
 
     return (
         <>
-            <div className="divAdmin h-[79.8vh] flex flex-col justify-center">
+            <div className="divAdmin h-[80.6vh] flex flex-col justify-center">
                 <h1 className="text-3xl my-5 font-semibold text-center">
                     Hospital de emergencias psiquiatricas Torcuato de Alvear
                 </h1>

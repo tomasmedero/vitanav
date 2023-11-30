@@ -12,7 +12,6 @@ export const CreatePage = () => {
         defaultValues: { pacientesEnEspera: 0 },
     })
     const dispatch = useDispatch()
-
     const onSubmit = (data) => {
         dispatch(startSaveHospital({ data }))
         reset()
@@ -20,12 +19,12 @@ export const CreatePage = () => {
 
     return (
         <>
-            <section className="w-1/2 flex justify-center flex-col mx-auto h-[79.8vh]">
+            <section className="w-1/2 flex justify-center flex-col mx-auto h-[80.7vh]">
                 <h1 className="text-3xl font-bold text-center my-5">
                     Crear Hospital
                 </h1>
                 <h2 className="bg-orange-400 text-center">
-                    Panel de super administrador
+                    Panel de SUPER administrador
                 </h2>
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -143,10 +142,12 @@ export const CreatePage = () => {
                         />
                     </div>
 
-                    <input
+                    <button
                         type="submit"
-                        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    />
+                        className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    >
+                        Enviar
+                    </button>
                 </form>
             </section>
         </>

@@ -51,31 +51,31 @@ export const MapComponent = () => {
                             <Popup>
                                 <p>
                                     <span className="font-extrabold">
-                                        Nombre:
+                                        Nombre:{" "}
                                     </span>
                                     {hospital.nombre}
                                 </p>
                                 <p>
                                     <span className="font-extrabold">
-                                        Dirección:
+                                        Dirección:{" "}
                                     </span>
                                     {hospital.direccion}
                                 </p>
                                 <p>
                                     <span className="font-extrabold">
-                                        Teléfono:
+                                        Teléfono:{" "}
                                     </span>
                                     {hospital.telefono}
                                 </p>
                                 <p>
                                     <span className="font-extrabold">
-                                        Especialidad:
+                                        Especialidad:{" "}
                                     </span>
                                     {hospital.especialidad}
                                 </p>
                                 <p>
                                     <span className="font-extrabold text-lg">
-                                        Pacientes en espera:
+                                        Pacientes en espera:{" "}
                                     </span>
                                     <span className="text-lg font-bold text-yellow-500">
                                         {hospital.pacientesEnEspera}
