@@ -1,15 +1,19 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { startGoogleLogin, startResetErrorMsg } from '../../store/auth/thunks'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useMemo } from 'react'
+import Swal from 'sweetalert2'
 
 export const RegisterPage = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  // const { status, errorMessage } = useSelector((state) => state.auth)
+  const { status, errorMessage } = useSelector((state) => state.auth)
 
-  // const isChequeandoAutenticacion = useMemo(
-  //   () => status === 'chequeando',
-  //   [status]
-  // )
+  const isChequeandoAutenticacion = useMemo(
+    () => status === 'checking',
+    [status]
+  )
 
   const {
     register,
@@ -23,18 +27,18 @@ export const RegisterPage = () => {
     console.log(data)
   }
 
-  // const onGoogleLogin = () => {
-  //   const thunkAction = startGoogleLogin()
-  //   thunkAction(dispatch)
-  // }
+  const onGoogleLogin = () => {
+    const thunkAction = startGoogleLogin()
+    thunkAction(dispatch)
+  }
 
-  // useEffect(() => {
-  //   if (errorMessage !== undefined && errorMessage !== null) {
-  //     Swal.fire('Error en la autenticacion', errorMessage, 'error')
-  //     const thunkAction = startResetErrorMsg()
-  //     thunkAction(dispatch)
-  //   }
-  // }, [errorMessage, dispatch])
+  useEffect(() => {
+    if (errorMessage !== undefined && errorMessage !== null) {
+      Swal.fire('Error en la autenticacion', errorMessage, 'error')
+      const thunkAction = startResetErrorMsg()
+      thunkAction(dispatch)
+    }
+  }, [errorMessage, dispatch])
 
   return (
     <>
@@ -123,7 +127,7 @@ export const RegisterPage = () => {
               <button
                 type='submit'
                 className='w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600'
-                //disabled={isChequeandoAutenticacion}
+                disabled={isChequeandoAutenticacion}
               >
                 Registrar
               </button>
@@ -138,8 +142,8 @@ export const RegisterPage = () => {
           {/* Login con redes sociales */}
           <div className='flex mt-4 gap-x-2'>
             <button
-              // disabled={isChequeandoAutenticacion}
-              //onClick={onGoogleLogin}
+              disabled={isChequeandoAutenticacion}
+              onClick={onGoogleLogin}
               className='w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline'
               type='button'
             >

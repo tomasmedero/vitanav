@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
+import { startGoogleLogin, startResetErrorMsg } from '../../store/auth/thunks'
 
 export const LoginPage = () => {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
 
-  // const { status, errorMessage } = useSelector((state) => state.auth)
+  const { status, errorMessage } = useSelector((state) => state.auth)
 
-  // const isChequeandoAutenticacion = useMemo(
-  //   () => status === 'chequeando',
-  //   [status]
-  // )
+  const isChequeandoAutenticacion = useMemo(
+    () => status === 'checking',
+    [status]
+  )
 
   const {
     register,
@@ -23,18 +27,18 @@ export const LoginPage = () => {
     console.log(data)
   }
 
-  // const onGoogleLogin = () => {
-  //   const thunkAction = startGoogleLogin()
-  //   thunkAction(dispatch)
-  // }
+  const onGoogleLogin = () => {
+    const thunkAction = startGoogleLogin()
+    thunkAction(dispatch)
+  }
 
-  // useEffect(() => {
-  //   if (errorMessage !== undefined && errorMessage !== null) {
-  //     Swal.fire('Error en la autenticacion', errorMessage, 'error')
-  //     const thunkAction = startResetErrorMsg()
-  //     thunkAction(dispatch)
-  //   }
-  // }, [errorMessage, dispatch])
+  useEffect(() => {
+    if (errorMessage !== undefined && errorMessage !== null) {
+      Swal.fire('Error en la autenticacion', errorMessage, 'error')
+      const thunkAction = startResetErrorMsg()
+      thunkAction(dispatch)
+    }
+  }, [errorMessage, dispatch])
 
   return (
     <>
@@ -95,7 +99,7 @@ export const LoginPage = () => {
 
             <div className='mt-6'>
               <button
-                // disabled={isChequeandoAutenticacion}
+                disabled={isChequeandoAutenticacion}
                 type='submit'
                 className='w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600'
               >
@@ -113,8 +117,8 @@ export const LoginPage = () => {
 
           <div className='flex mt-4 gap-x-2'>
             <button
-              // disabled={isChequeandoAutenticacion}
-              // onClick={onGoogleLogin}
+              disabled={isChequeandoAutenticacion}
+              onClick={onGoogleLogin}
               className='w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2 px-4 focus:outline-none focus:shadow-outline'
               type='button'
             >

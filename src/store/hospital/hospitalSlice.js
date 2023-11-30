@@ -5,7 +5,8 @@ export const hospitalSlice = createSlice({
   initialState: {
     isSaving: false,
     hospitals: [],
-    //active: null, Nota Chapa No sirve por ahora veremos
+    active: null,
+    idPermited: [],
   },
   reducers: {
     savingNewHospital: (state) => {
