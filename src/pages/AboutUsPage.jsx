@@ -1,7 +1,7 @@
 export const AboutUsPage = () => {
     return (
         <>
-            <section className="containerAbout">
+            <section className="containerAbout min-h-[77.7vh]">
                 <h1 className="text-5xl font-bold mt-5 mb-10 ml-10">
                     Sobre el creador
                 </h1>
@@ -34,5 +34,5 @@ export const AboutUsPage = () => {
                 </section>
             </section>
         </>
-    );
-};
+    )
+}
