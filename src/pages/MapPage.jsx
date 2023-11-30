@@ -24,14 +24,14 @@ export const MapPage = () => {
 
   useEffect(() => {
     dispatch(startLoadingHospitals())
-  }, [])
+  }, [dispatch])
 
   const { hospitals } = useSelector((state) => state.hospital)
 
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>
       <MapContainer
-        center={[-34.617214, -58.453091]}
+        center={[-34.583517, -58.447984]}
         zoom={13}
         scrollWheelZoom={true}
         zoomControl={false}

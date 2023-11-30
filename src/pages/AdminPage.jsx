@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 export const AdminPage = () => {
   const [count, setCount] = useState(0)
@@ -17,7 +17,7 @@ export const AdminPage = () => {
 
   return (
     <>
-      <div className='divAdmin'>
+      <div className='divAdmin h-[79.8vh] flex flex-col justify-center'>
         <h2 className='text-3xl my-5 font-semibold text-center'>
           Hospital de emergencias psiquiatricas Torcuato de Alvear
         </h2>
