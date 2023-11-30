@@ -1,5 +1,3 @@
-import React from 'react'
-
 export const FooterComponent = () => {
   return (
     <footer className='bg-orange-950 w-[100%] py-2'>

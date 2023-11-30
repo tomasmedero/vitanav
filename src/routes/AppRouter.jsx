@@ -8,6 +8,7 @@ import {
   LoadingPage,
   MapPage,
 } from '../pages'
+import { AuthRoutes } from '../auth/routes/AuthRoutes'
 
 export const AppRouter = () => {
   const location = useLocation()
@@ -31,6 +32,7 @@ export const AppRouter = () => {
           <Route path='/about' element={<AboutUsPage />} />
           <Route path='/admin' element={<AdminPage />} />
           <Route path='/createHospital' element={<CreatePage />} />
+          <Route path='/auth/*' element={<AuthRoutes />} />
           <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
         {!isMap && <FooterComponent />}
