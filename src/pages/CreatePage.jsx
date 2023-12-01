@@ -1,15 +1,22 @@
 import { useForm } from 'react-hook-form'
 import { startSaveHospital } from '../store/hospital/thunks'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 export const CreatePage = () => {
+  const { uid } = useSelector((state) => state.auth)
+
+  const idAdmin = '8Lxw6b232ZgTTOK888D4ICtRm8m1'
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm({
-    defaultValues: { pacientesEnEspera: 0 },
+    defaultValues: {
+      pacientesEnEspera: 0,
+      idPermitidos: uid === idAdmin ? [uid] : [uid, idAdmin],
+    },
   })
   const dispatch = useDispatch()
 

@@ -3,7 +3,11 @@ import { useForm } from 'react-hook-form'
 import { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
-import { startGoogleLogin, startResetErrorMsg } from '../../store/auth/thunks'
+import {
+  startGoogleLogin,
+  startLoginWithEmail,
+  startResetErrorMsg,
+} from '../../store/auth/thunks'
 
 export const LoginPage = () => {
   const dispatch = useDispatch()
@@ -24,7 +28,7 @@ export const LoginPage = () => {
   })
 
   const onSubmit = (data) => {
-    console.log(data)
+    dispatch(startLoginWithEmail(data))
   }
 
   const onGoogleLogin = () => {

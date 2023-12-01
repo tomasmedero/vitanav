@@ -1,42 +1,36 @@
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { FooterComponent, Navbar } from '../components'
-import {
-  AboutUsPage,
-  AdminPage,
-  CreatePage,
-  HomePage,
-  LoadingPage,
-  MapPage,
-} from '../pages'
+import { Navigate, Route, Routes } from 'react-router-dom'
+
+import { LoadingPage } from '../pages'
 import { AuthRoutes } from '../auth/routes/AuthRoutes'
+import { useCheckAuth } from '../hooks/useCheckAuth'
+import { UserRoutes } from './UserRoutes'
 
 export const AppRouter = () => {
-  const location = useLocation()
+  const status = useCheckAuth()
 
-  const isMap = location.pathname === '/map'
-
-  const status = 'checking2'
-  //TODO Chapa Editar el Loading Page
-  // const status = useCheckAuth()  Nota Chapa hacer que funcione
   if (status === 'checking') {
     return <LoadingPage />
   }
 
   return (
     <>
-      <div className='relative'>
-        <Navbar />
+      {status === 'autenticated' ? (
+        <>
+          <div>
+            <Routes>
+              <Route path='/*' element={<UserRoutes />} />
+              <Route path='/*' element={<Navigate to='/' />} />
+              <Route path='/auth/*' element={<Navigate to='/' />} />
+            </Routes>
+          </div>
+        </>
+      ) : (
         <Routes>
-          <Route path='/*' element={<HomePage />} />
-          <Route path='/map' element={<MapPage />} />
-          <Route path='/about' element={<AboutUsPage />} />
-          <Route path='/admin' element={<AdminPage />} />
-          <Route path='/createHospital' element={<CreatePage />} />
+          <Route path='/*' element={<UserRoutes />} />
           <Route path='/auth/*' element={<AuthRoutes />} />
           <Route path='/*' element={<Navigate to='/' />} />
         </Routes>
-        {!isMap && <FooterComponent />}
-      </div>
+      )}
     </>
   )
 }
