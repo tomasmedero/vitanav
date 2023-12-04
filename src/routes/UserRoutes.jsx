@@ -24,14 +24,16 @@ export const UserRoutes = () => {
           <Route path='/' element={<HomePage />} />
           <Route path='/map' element={<MapPage />} />
           <Route path='/about' element={<AboutUsPage />} />
-          <Route path='/adminUser' element={<AdminUserPage />} />
 
           {(role === 'hospitalAdminUser' || role === 'adminUser') && (
             <Route path='/admin' element={<AdminPage />} />
           )}
 
           {role === 'adminUser' && (
-            <Route path='/createHospital' element={<CreatePage />} />
+            <>
+              <Route path='/createHospital' element={<CreatePage />} />
+              <Route path='/adminUser' element={<AdminUserPage />} />
+            </>
           )}
 
           <Route path='/*' element={<Navigate to='/' />} />

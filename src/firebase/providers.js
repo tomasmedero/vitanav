@@ -8,7 +8,13 @@ import {
   signInWithPopup,
   updateProfile,
 } from 'firebase/auth'
-import { collection, doc, getDocs, setDoc } from 'firebase/firestore/lite'
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  setDoc,
+} from 'firebase/firestore/lite'
 
 const googleProvider = new GoogleAuthProvider()
 
@@ -39,7 +45,12 @@ export const loginWithEmail = async ({ email, password }) => {
 
     const { uid, photoURL, displayName } = resp.user
 
-    return { ok: true, uid, photoURL, displayName }
+    return {
+      ok: true,
+      uid,
+      photoURL,
+      displayName,
+    }
   } catch (error) {
     return {
       ok: false,
@@ -71,7 +82,7 @@ export const registerWithEmail = async ({ email, password, displayName }) => {
       throw new Error('No se puede obtener el usuario actual')
     }
 
-    const newUserRole = await createUserRolInFirestore({
+    await createUserRolInFirestore({
       uid,
       displayName,
       email,
@@ -84,7 +95,7 @@ export const registerWithEmail = async ({ email, password, displayName }) => {
       photoURL,
       email,
       displayName,
-      role: newUserRole.role,
+      role: 'user',
     }
   } catch (error) {
     return {
@@ -98,8 +109,17 @@ export const logoutFirebase = async () => {
   return await FirebaseAuth.signOut()
 }
 
+export const getUserRole = async (uid) => {
+  const userRef = doc(FirebaseDB, 'usersRol', uid)
+  const userDoc = await getDoc(userRef)
+
+  const data = userDoc.data()
+
+  return data.role
+}
+
 export const getAllUsers = async () => {
-  const usersCollection = collection(FirebaseDB, 'users')
+  const usersCollection = collection(FirebaseDB, 'usersRol')
   const userSnapshot = await getDocs(usersCollection)
   const users = userSnapshot.docs.map((doc) => doc.data())
   return users

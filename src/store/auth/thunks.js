@@ -1,5 +1,6 @@
 import { checkingCredentials, login, logout, resetErrorMsg } from '.'
 import {
+  getUserRole,
   loginWithEmail,
   loginWithGoogle,
   logoutFirebase,
@@ -27,6 +28,10 @@ export const startGoogleLogin = () => {
     if (!res.ok) {
       dispatch(logout({ errorMessage: res.errorMessage }))
     }
+
+    const userRole = await getUserRole(res.uid)
+
+    res.role = userRole
 
     dispatch(login(res))
   }
@@ -59,6 +64,9 @@ export const startLoginWithEmail = ({ email, password }) => {
 
     if (!res.ok) return dispatch(logout(res))
 
+    const userRole = await getUserRole(res.uid)
+
+    res.role = userRole
     dispatch(login(res))
   }
 }
