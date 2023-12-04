@@ -1,5 +1,6 @@
 export * from './AboutUsPage'
 export * from './AdminPage'
+export * from './AdminUserPage'
 export * from './CreatePage'
 export * from './HomePage'
 export * from './LoadingPage'

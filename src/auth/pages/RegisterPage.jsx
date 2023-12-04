@@ -37,7 +37,7 @@ export const RegisterPage = () => {
   }
 
   useEffect(() => {
-    if (errorMessage && errorMessage.trim() !== '') {
+    if (errorMessage !== undefined && errorMessage !== null) {
       Swal.fire('Error en la autenticacion', errorMessage, 'error')
       const thunkAction = startResetErrorMsg()
       thunkAction(dispatch)

@@ -13,7 +13,7 @@ import { startLoadingHospitals } from '../store/hospital/thunks'
 // TODO:
 //EL Admin que puedas actualizar los pacientes en espera en tiempo real
 // Agregarle un boton al Admin
-//Hacer el login y register
+//Personalizar los mensajes de error de Firebase
 
 export const MapPage = () => {
   const customIcon = new Icon({
