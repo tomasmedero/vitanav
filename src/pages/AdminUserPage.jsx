@@ -22,7 +22,7 @@ export const AdminUserPage = () => {
 
   return (
     <>
-      <h1 className='text-3xl font-bold text-center my-5'>Usuarios</h1>
+      <h1 className='text-3xl font-bold text-center my-5'>Lista de Usuarios</h1>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-10 mb-10'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -64,6 +64,7 @@ export const AdminUserPage = () => {
                   </Link>
 
                   <button
+                    //TODO hacer el delete
                     onClick={() => console.log('Remove')}
                     className='font-medium text-red-600 dark:text-red-500 hover:underline bg-red-200 px-2 py-1 rounded'
                   >
