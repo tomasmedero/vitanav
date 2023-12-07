@@ -7,6 +7,7 @@ import {
   HomePage,
   MapPage,
   AdminUserPage,
+  AdminEditUserPage,
 } from '../pages'
 import { useSelector } from 'react-redux'
 
@@ -33,6 +34,7 @@ export const UserRoutes = () => {
             <>
               <Route path='/createHospital' element={<CreatePage />} />
               <Route path='/adminUser' element={<AdminUserPage />} />
+              <Route path='/adminUser/:id' element={<AdminEditUserPage />} />
             </>
           )}
 

@@ -125,6 +125,14 @@ export const getAllUsers = async () => {
   return users
 }
 
-// export const updateUserRole = async (userId, newRole) => {
-//   // Código para actualizar el rol de un usuario
-// }
+export const getUserById = async (uid) => {
+  const userRef = doc(FirebaseDB, 'usersRol', uid)
+  const userDoc = await getDoc(userRef)
+  const user = userDoc.data()
+  return user
+}
+
+export const updateUserRole = async (userId, newRole) => {
+  const userRef = doc(FirebaseDB, 'usersRol', userId)
+  await setDoc(userRef, { role: newRole }, { merge: true })
+}

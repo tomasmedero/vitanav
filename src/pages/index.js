@@ -1,4 +1,5 @@
 export * from './AboutUsPage'
+export * from './AdminEditUserPage'
 export * from './AdminPage'
 export * from './AdminUserPage'
 export * from './CreatePage'
