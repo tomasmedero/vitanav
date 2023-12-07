@@ -11,8 +11,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { startLoadingHospitals } from '../store/hospital/thunks'
 // TODO:
-//EL Admin que puedas actualizar los pacientes en espera en tiempo real
-// Falta solucion lo del estaod que no se queda guardado
+//En pacientes en espera poner un success o algo cuando actualiza la lista de espera
+// Falta solucion lo del estado que no se queda guardado
 //Personalizar los mensajes de error de Firebase
 
 export const MapPage = () => {
