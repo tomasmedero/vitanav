@@ -30,6 +30,7 @@ export const AdminEditUserPage = () => {
 
   return (
     <div className='flex flex-col items-center mt-10 mb-10'>
+      <h1 className='text-3xl font-bold text-center my-5'>Editar Usuario</h1>
       <div key={user.uid} className='mb-2'>
         <p>{user.email}</p>
         <select

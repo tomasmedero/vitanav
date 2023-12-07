@@ -2,12 +2,12 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { FooterComponent, Navbar } from '../components'
 import {
   AboutUsPage,
-  AdminPage,
-  CreatePage,
+  AdminHospitalPage,
   HomePage,
   MapPage,
   AdminUserPage,
   AdminEditUserPage,
+  CreateHospitalPage,
 } from '../pages'
 import { useSelector } from 'react-redux'
 
@@ -27,12 +27,12 @@ export const UserRoutes = () => {
           <Route path='/about' element={<AboutUsPage />} />
 
           {(role === 'hospitalAdminUser' || role === 'adminUser') && (
-            <Route path='/admin' element={<AdminPage />} />
+            <Route path='/admin' element={<AdminHospitalPage />} />
           )}
 
           {role === 'adminUser' && (
             <>
-              <Route path='/createHospital' element={<CreatePage />} />
+              <Route path='/createHospital' element={<CreateHospitalPage />} />
               <Route path='/adminUser' element={<AdminUserPage />} />
               <Route path='/adminUser/:id' element={<AdminEditUserPage />} />
             </>

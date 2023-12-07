@@ -1,11 +1,10 @@
 import { useForm } from 'react-hook-form'
 import { startSaveHospital } from '../store/hospital/thunks'
 import { useDispatch, useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
-export const CreatePage = () => {
+export const CreateHospitalPage = () => {
   const { uid } = useSelector((state) => state.auth)
-
-  const idAdmin = '8Lxw6b232ZgTTOK888D4ICtRm8m1'
 
   const {
     register,
@@ -15,19 +14,24 @@ export const CreatePage = () => {
   } = useForm({
     defaultValues: {
       pacientesEnEspera: 0,
-      idPermitidos: uid === idAdmin ? [uid] : [uid, idAdmin],
+      idPermitidos: [uid],
     },
   })
   const dispatch = useDispatch()
 
   const onSubmit = (data) => {
-    dispatch(startSaveHospital({ data }))
-    reset()
+    try {
+      dispatch(startSaveHospital({ data }))
+      reset()
+      Swal.fire('¡Creado!', 'El hospital ha sido creado con éxito.', 'success')
+    } catch (error) {
+      console.error('Error al crear el hospital:', error)
+    }
   }
 
   return (
     <>
-      <section className='w-1/2 flex justify-center flex-col mx-auto h-[79.8vh]'>
+      <section className='w-full md:w-1/2 flex justify-center flex-col mx-auto min-h-[79.8vh]'>
         <h1 className='text-3xl font-bold text-center my-5'>Crear Hospital</h1>
         <h2 className='bg-orange-400 text-center'>Panel de Administración</h2>
         <form
