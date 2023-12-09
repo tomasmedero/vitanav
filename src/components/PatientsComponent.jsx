@@ -1,27 +1,23 @@
 import { useEffect, useState } from 'react'
 import { updateHospitalWaitingPatients } from '../firebase/providers'
-import { startSavingActiveHospitals } from '../store/hospital/thunks'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 export const PatientsComponent = () => {
   const [hospitalByUser, setHospitalByUser] = useState([])
   const [countWaiting, setCountWaiting] = useState()
-  const { uid } = useSelector((state) => state.auth)
   const { active } = useSelector((state) => state.hospital)
-  const dispatch = useDispatch()
+  const { id } = useParams()
 
   useEffect(() => {
-    const searchHospital = async (id) => {
-      dispatch(startSavingActiveHospitals(id))
+    let hospital
+    if (id) {
+      hospital = active.find((hospital) => hospital.id === id)
     }
-
-    searchHospital(uid)
-  }, [dispatch, uid])
-
-  useEffect(() => {
-    setHospitalByUser(active)
-    setCountWaiting(active.pacientesEnEspera)
-  }, [active])
+    hospital = hospital || active
+    setHospitalByUser(hospital)
+    setCountWaiting(hospital.pacientesEnEspera)
+  }, [active, id])
 
   const incrementCounter = () => {
     setCountWaiting((prevCount) => prevCount + 1)
@@ -43,6 +39,7 @@ export const PatientsComponent = () => {
       console.error('Error al actualizar pacientes:', error)
     }
   }
+
   return (
     <>
       <div className='divAdmin w-full md:w-1/2 mx-auto min-h-[79.8vh] flex flex-col justify-center'>

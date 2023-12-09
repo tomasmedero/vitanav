@@ -16,9 +16,7 @@ export const PatientsHospitalPage = () => {
     searchHospital(uid)
   }, [dispatch, uid])
 
-  console.log(active)
-
   return (
-    <>{active.lenght > 1 ? <PatientsListComponent /> : <PatientsComponent />}</>
+    <>{active.length > 1 ? <PatientsListComponent /> : <PatientsComponent />}</>
   )
 }

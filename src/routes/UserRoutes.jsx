@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
-import { FooterComponent, Navbar } from '../components'
+import { FooterComponent, Navbar, PatientsComponent } from '../components'
 import PropTypes from 'prop-types'
-
 import {
   AboutUsPage,
   HomePage,
@@ -35,7 +34,13 @@ export const UserRoutes = ({ userLocation }) => {
           <Route path='/about' element={<AboutUsPage />} />
 
           {(role === 'hospitalAdminUser' || role === 'adminUser') && (
-            <Route path='/adminPatients' element={<PatientsHospitalPage />} />
+            <>
+              <Route path='/adminPatients' element={<PatientsHospitalPage />} />
+              <Route
+                path='/adminPatients/:id'
+                element={<PatientsComponent />}
+              />
+            </>
           )}
 
           {role === 'adminUser' && (

@@ -26,7 +26,7 @@ export const AdminHospitalsPage = () => {
         setHospitals(allHospitals)
       }
     } catch (error) {
-      console.log('No se pudo eliminar el hospital')
+      console.error('No se pudo eliminar el hospital')
     }
   }
 

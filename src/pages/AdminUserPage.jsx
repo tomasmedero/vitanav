@@ -26,7 +26,7 @@ export const AdminUserPage = () => {
         setUsers(allUsers)
       }
     } catch (error) {
-      console.log('No se pudo eliminar el usuario')
+      console.error('No se pudo eliminar el usuario')
     }
   }
 
