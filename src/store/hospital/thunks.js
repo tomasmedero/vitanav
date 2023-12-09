@@ -5,10 +5,7 @@ import {
   setHospitalsActive,
   setHospitals,
 } from './hospitalSlice'
-import {
-  LoadHospitals,
-  searchHospitalByUserId,
-} from '../../helpers/loadHospitals'
+import { LoadHospitals, searchHospitalByUserId } from '../../firebase/providers'
 
 export const startSaveHospital = ({ data }) => {
   return async (dispatch) => {
@@ -33,7 +30,6 @@ export const startLoadingHospitals = () => {
 export const startSavingActiveHospitals = (idUser) => {
   return async (dispatch) => {
     const activeHospital = await searchHospitalByUserId(idUser)
-
     dispatch(setHospitalsActive(activeHospital))
   }
 }

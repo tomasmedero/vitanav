@@ -47,12 +47,9 @@ export const UserRoutes = ({ userLocation }) => {
                 path='admin/hospital/:id'
                 element={<AdminEditHospitalsPage />}
               />
-              <Route path='admin/adminUser' element={<AdminUserPage />} />
+              <Route path='admin/user' element={<AdminUserPage />} />
 
-              <Route
-                path='admin/adminUser/:id'
-                element={<AdminEditUserPage />}
-              />
+              <Route path='admin/user/:id' element={<AdminEditUserPage />} />
             </>
           )}
 

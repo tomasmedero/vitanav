@@ -13,12 +13,16 @@ import { startLoadingHospitals } from '../store/hospital/thunks'
 import PropTypes from 'prop-types'
 import { Icon } from 'leaflet'
 // TODO:
-//En pacientes en espera poner un success o algo cuando actualiza la lista de espera
 // Falta solucion lo del estado que no se queda guardado
-//Personalizar los mensajes de error de Firebase
-//Hacer que el numero de paciente en espera no tarde tanto en actualizarse
-//Mejorar el icono de locacion se ve muy feo, y esta trayendo cualquier locacion
 // Que cuando crea un hospital no tenga que poner la localicazion
+
+//Sin prioridad:
+//En pacientes en espera poner un success o algo cuando actualiza la lista de espera
+//Esta trayendo cualquier locacion
+//Hacer que el numero de paciente en espera no tarde tanto en actualizarse
+//Personalizar los mensajes de error de Firebase
+//Mejorar el icono de locacion se ve muy feo
+//en el mapa poner mejor lo de los pacientes en espera se ve feo
 
 export const MapPage = ({ userLocation }) => {
   const redIcon = new Icon({

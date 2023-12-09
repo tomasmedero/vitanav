@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getAllUsers } from '../firebase/providers'
+import { deleteUserById, getAllUsers } from '../firebase/providers'
 import { Link } from 'react-router-dom'
 
 export const AdminUserPage = () => {
@@ -13,6 +13,22 @@ export const AdminUserPage = () => {
 
     fetchUsers()
   }, [])
+
+  const onDelete = async (id) => {
+    try {
+      if (
+        window.confirm(
+          '¿Estás seguro que deseas eliminar este juego? Esta acción no se puede deshacer'
+        )
+      ) {
+        await deleteUserById(id)
+        const allUsers = await getAllUsers()
+        setUsers(allUsers)
+      }
+    } catch (error) {
+      console.log('No se pudo eliminar el usuario')
+    }
+  }
 
   const roleNames = {
     adminUser: 'Admin de Web',
@@ -56,7 +72,7 @@ export const AdminUserPage = () => {
 
                 <td className='flex items-center px-6 py-4'>
                   <Link
-                    to={`/admin/adminUser/${user.uid}`}
+                    to={`/admin/user/${user.uid}`}
                     type='button'
                     className='font-medium text-blue-600 dark:text-blue-500 hover:underline bg-blue-200 px-2 py-1 rounded mr-2'
                   >
@@ -65,7 +81,7 @@ export const AdminUserPage = () => {
 
                   <button
                     //TODO hacer el delete
-                    onClick={() => console.log('Remove')}
+                    onClick={() => onDelete(user.uid)}
                     className='font-medium text-red-600 dark:text-red-500 hover:underline bg-red-200 px-2 py-1 rounded'
                   >
                     Eliminar

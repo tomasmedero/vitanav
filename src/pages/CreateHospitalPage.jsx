@@ -29,11 +29,13 @@ export const CreateHospitalPage = () => {
     }
   }
 
+  //TODO AGREGARLE ESTILO AL FORM SE VE FEO
+
   return (
     <>
       <section className='w-full md:w-1/2 flex justify-center flex-col mx-auto min-h-[79.8vh]'>
         <h1 className='text-3xl font-bold text-center my-5'>Crear Hospital</h1>
-        <h2 className='bg-orange-400 text-center'>Panel de Administración</h2>
+
         <form
           onSubmit={handleSubmit(onSubmit)}
           className='p-6 space-y-4 bg-white shadow-md rounded-md'

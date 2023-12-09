@@ -22,12 +22,16 @@ export const AdminEditUserPage = () => {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await updateUserRole(userId, newRole)
-      navigate('/adminUser')
+      navigate('/admin/user')
     } catch (error) {
       Swal.fire('Error al actualizar el rol del usuario:', error, 'error')
     }
   }
 
+  const onBack = async () => {
+    navigate('/admin/user')
+  }
+  //Dar estilos a la pagina
   return (
     <div className='flex flex-col items-center mt-10 mb-10'>
       <h1 className='text-3xl font-bold text-center my-5'>Editar Usuario</h1>
@@ -49,6 +53,12 @@ export const AdminEditUserPage = () => {
         className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
       >
         Actualizar cambios
+      </button>
+      <button
+        onClick={() => onBack()}
+        className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+      >
+        Volver
       </button>
     </div>
   )
