@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { LoadHospitals, deleteHospitalById } from '../firebase/providers'
+import { LoadHospitals } from '../firebase/providers'
+import { useSelector } from 'react-redux'
 
-export const AdminHospitalsPage = () => {
+export const HospitalListPage = () => {
   const [hospitals, setHospitals] = useState([])
 
   useEffect(() => {
@@ -14,25 +14,24 @@ export const AdminHospitalsPage = () => {
     fetchHospitals()
   }, [])
 
-  const onDelete = async (id) => {
-    try {
-      if (
-        window.confirm(
-          '¿Estás seguro que deseas eliminar este juego? Esta acción no se puede deshacer'
-        )
-      ) {
-        await deleteHospitalById(id)
-        const allHospitals = await LoadHospitals()
-        setHospitals(allHospitals)
-      }
-    } catch (error) {
-      console.log('No se pudo eliminar el hospital')
-    }
-  }
+  const { uid } = useSelector((state) => state.auth)
 
   return (
     <>
-      <h1 className='text-3xl font-bold text-center my-5'>Lista de Usuarios</h1>
+      <h1 className='text-3xl font-bold text-center my-5'>
+        Lista de Hospitales
+      </h1>
+      <div className='flex flex-col items-center'>
+        <div className='inline-flex mt-2 xs:mt-0'>
+          <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 rounded-s hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+            Todos
+          </button>
+          <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 border-0 border-s border-gray-700 rounded-e hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+            Favoritos
+          </button>
+        </div>
+      </div>
+
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-10 mb-10'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -48,12 +47,6 @@ export const AdminHospitalsPage = () => {
               </th>
               <th scope='col' className='px-6 py-3'>
                 Especialidad
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Latitud
-              </th>
-              <th scope='col' className='px-6 py-3'>
-                Longitud
               </th>
               <th scope='col' className='px-6 py-3'></th>
             </tr>
@@ -73,25 +66,17 @@ export const AdminHospitalsPage = () => {
                 <td className='px-6 py-4'>{hospital.direccion}</td>
                 <td className='px-6 py-4'>{hospital.telefono}</td>
                 <td className='px-6 py-4'>{hospital.especialidad}</td>
-                <td className='px-6 py-4'>{hospital.latitud}</td>
-                <td className='px-6 py-4'>{hospital.longitud}</td>
 
-                <td className='flex items-center px-6 py-4'>
-                  <Link
-                    to={`/admin/hospital/${hospital.id}`}
-                    type='button'
-                    className='font-medium text-blue-600 dark:text-blue-500 hover:underline bg-blue-200 px-2 py-1 rounded mr-2'
-                  >
-                    Editar
-                  </Link>
-
-                  <button
-                    onClick={() => onDelete(hospital.id)}
-                    className='font-medium text-red-600 dark:text-red-500 hover:underline bg-red-200 px-2 py-1 rounded'
-                  >
-                    Eliminar
-                  </button>
-                </td>
+                {uid && (
+                  <td className='flex items-center px-6 py-4'>
+                    <button
+                      onClick={() => console.log('Fav')}
+                      className='font-medium text-red-600 dark:text-red-500 hover:underline bg-red-200 px-2 py-1 rounded'
+                    >
+                      Fav
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>
