@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 
 import {
   AboutUsPage,
-  AdminHospitalPage,
   HomePage,
   MapPage,
   AdminUserPage,
   AdminEditUserPage,
   CreateHospitalPage,
+  PatientsHospitalPage,
 } from '../pages'
 import { useSelector } from 'react-redux'
 
@@ -32,7 +32,7 @@ export const UserRoutes = ({ userLocation }) => {
           <Route path='/about' element={<AboutUsPage />} />
 
           {(role === 'hospitalAdminUser' || role === 'adminUser') && (
-            <Route path='/admin' element={<AdminHospitalPage />} />
+            <Route path='/adminPatients' element={<PatientsHospitalPage />} />
           )}
 
           {role === 'adminUser' && (

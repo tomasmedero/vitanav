@@ -3,7 +3,7 @@ import { updateHospitalWaitingPatients } from '../helpers/loadHospitals'
 import { useDispatch, useSelector } from 'react-redux'
 import { startSavingActiveHospitals } from '../store/hospital/thunks'
 
-export const AdminHospitalPage = () => {
+export const PatientsHospitalPage = () => {
   const [hospitalByUser, setHospitalByUser] = useState([])
   const [countWaiting, setCountWaiting] = useState()
   const { uid } = useSelector((state) => state.auth)

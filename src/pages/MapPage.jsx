@@ -6,17 +6,19 @@ import {
   ZoomControl,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Icon } from 'leaflet'
+
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { startLoadingHospitals } from '../store/hospital/thunks'
 import PropTypes from 'prop-types'
+import { Icon } from 'leaflet'
 // TODO:
 //En pacientes en espera poner un success o algo cuando actualiza la lista de espera
 // Falta solucion lo del estado que no se queda guardado
 //Personalizar los mensajes de error de Firebase
 //Hacer que el numero de paciente en espera no tarde tanto en actualizarse
 //Mejorar el icono de locacion se ve muy feo, y esta trayendo cualquier locacion
+// Que cuando crea un hospital no tenga que poner la localicazion
 
 export const MapPage = ({ userLocation }) => {
   const redIcon = new Icon({
@@ -66,15 +68,16 @@ export const MapPage = ({ userLocation }) => {
 
         {hospitals.map((hospital) => {
           let icon
-          if (hospital.pacientesEnEspera > 12) {
+          if (hospital.pacientesEnEspera >= 12) {
             icon = redIcon
-          } else if (hospital.pacientesEnEspera > 6) {
+          } else if (hospital.pacientesEnEspera >= 6) {
             icon = yellowIcon
-          } else if (hospital.pacientesEnEspera > 1) {
+          } else if (hospital.pacientesEnEspera >= 2) {
             icon = blueIcon
-          } else if (hospital.pacientesEnEspera > 0) {
+          } else if (hospital.pacientesEnEspera >= 0) {
             icon = greenIcon
           }
+
           return (
             <div key={hospital.id}>
               <Marker
