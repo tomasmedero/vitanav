@@ -1,2 +1,2 @@
-export * from "./geolocalization-hospitals";
-export * from "./index";
+export * from './geolocalization-hospitals'
+export * from './loadHospitals'

@@ -1,5 +1,7 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { FooterComponent, Navbar } from '../components'
+import PropTypes from 'prop-types'
+
 import {
   AboutUsPage,
   AdminHospitalPage,
@@ -11,7 +13,7 @@ import {
 } from '../pages'
 import { useSelector } from 'react-redux'
 
-export const UserRoutes = () => {
+export const UserRoutes = ({ userLocation }) => {
   const location = useLocation()
 
   const { role } = useSelector((state) => state.auth)
@@ -23,7 +25,10 @@ export const UserRoutes = () => {
         <Navbar />
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='/map' element={<MapPage />} />
+          <Route
+            path='/map'
+            element={<MapPage userLocation={userLocation} />}
+          />
           <Route path='/about' element={<AboutUsPage />} />
 
           {(role === 'hospitalAdminUser' || role === 'adminUser') && (
@@ -44,4 +49,11 @@ export const UserRoutes = () => {
       </div>
     </>
   )
+}
+
+UserRoutes.propTypes = {
+  userLocation: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }),
 }

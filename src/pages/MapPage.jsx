@@ -10,16 +10,23 @@ import { Icon } from 'leaflet'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { startLoadingHospitals } from '../store/hospital/thunks'
+import PropTypes from 'prop-types'
 // TODO:
 //En pacientes en espera poner un success o algo cuando actualiza la lista de espera
 // Falta solucion lo del estado que no se queda guardado
 //Personalizar los mensajes de error de Firebase
-//TODO Hacer que el numero de paciente en espera no tarde tanto en actualizarse
+//Hacer que el numero de paciente en espera no tarde tanto en actualizarse
+//Mejorar el icono de locacion se ve muy feo, y esta trayendo cualquier locacion
 
-export const MapPage = () => {
+export const MapPage = ({ userLocation }) => {
   const customIcon = new Icon({
     iconUrl: ' /markerPosition.svg',
     iconSize: [34, 34],
+  })
+
+  const userIcon = new Icon({
+    iconUrl: '/iconMyLocation.png',
+    iconSize: [22, 22],
   })
   const dispatch = useDispatch()
 
@@ -32,12 +39,14 @@ export const MapPage = () => {
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>
       <MapContainer
-        center={[-34.583517, -58.447984]}
+        center={userLocation || [-34.583517, -58.447984]}
         zoom={13}
         scrollWheelZoom={true}
         zoomControl={false}
       >
         <TileLayer url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png' />
+
+        {userLocation && <Marker position={userLocation} icon={userIcon} />}
         <ZoomControl position='bottomright' />
         {hospitals.map((hospital) => (
           <div key={hospital.id}>
@@ -77,4 +86,11 @@ export const MapPage = () => {
       </MapContainer>
     </div>
   )
+}
+
+MapPage.propTypes = {
+  userLocation: PropTypes.shape({
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+  }),
 }
