@@ -19,8 +19,23 @@ import PropTypes from 'prop-types'
 //Mejorar el icono de locacion se ve muy feo, y esta trayendo cualquier locacion
 
 export const MapPage = ({ userLocation }) => {
-  const customIcon = new Icon({
+  const redIcon = new Icon({
     iconUrl: ' /markerPosition.svg',
+    iconSize: [34, 34],
+  })
+
+  const yellowIcon = new Icon({
+    iconUrl: ' /vitanav-yellow.png',
+    iconSize: [34, 34],
+  })
+
+  const blueIcon = new Icon({
+    iconUrl: ' /vitanav-blue.png',
+    iconSize: [34, 34],
+  })
+
+  const greenIcon = new Icon({
+    iconUrl: ' /vitanav-green.png',
     iconSize: [34, 34],
   })
 
@@ -48,41 +63,54 @@ export const MapPage = ({ userLocation }) => {
 
         {userLocation && <Marker position={userLocation} icon={userIcon} />}
         <ZoomControl position='bottomright' />
-        {hospitals.map((hospital) => (
-          <div key={hospital.id}>
-            <Marker
-              position={[hospital.latitud, hospital.longitud]}
-              icon={customIcon}
-            >
-              <Popup>
-                <p>
-                  <span className='font-extrabold'>Nombre:</span>
-                  {hospital.nombre}
-                </p>
-                <p>
-                  <span className='font-extrabold'>Dirección:</span>
-                  {hospital.direccion}
-                </p>
-                <p>
-                  <span className='font-extrabold'>Teléfono:</span>
-                  {hospital.telefono}
-                </p>
-                <p>
-                  <span className='font-extrabold'>Especialidad:</span>
-                  {hospital.especialidad}
-                </p>
-                <p>
-                  <span className='font-extrabold text-lg'>
-                    Pacientes en espera:
-                  </span>
-                  <span className='text-lg font-bold text-yellow-500'>
-                    {hospital.pacientesEnEspera}
-                  </span>
-                </p>
-              </Popup>
-            </Marker>
-          </div>
-        ))}
+
+        {hospitals.map((hospital) => {
+          let icon
+          if (hospital.pacientesEnEspera > 12) {
+            icon = redIcon
+          } else if (hospital.pacientesEnEspera > 6) {
+            icon = yellowIcon
+          } else if (hospital.pacientesEnEspera > 1) {
+            icon = blueIcon
+          } else if (hospital.pacientesEnEspera > 0) {
+            icon = greenIcon
+          }
+          return (
+            <div key={hospital.id}>
+              <Marker
+                position={[hospital.latitud, hospital.longitud]}
+                icon={icon}
+              >
+                <Popup>
+                  <p>
+                    <span className='font-extrabold'>Nombre:</span>
+                    {hospital.nombre}
+                  </p>
+                  <p>
+                    <span className='font-extrabold'>Dirección:</span>
+                    {hospital.direccion}
+                  </p>
+                  <p>
+                    <span className='font-extrabold'>Teléfono:</span>
+                    {hospital.telefono}
+                  </p>
+                  <p>
+                    <span className='font-extrabold'>Especialidad:</span>
+                    {hospital.especialidad}
+                  </p>
+                  <p>
+                    <span className='font-extrabold text-lg'>
+                      Pacientes en espera:
+                    </span>
+                    <span className='text-lg font-bold text-yellow-500'>
+                      {hospital.pacientesEnEspera}
+                    </span>
+                  </p>
+                </Popup>
+              </Marker>
+            </div>
+          )
+        })}
       </MapContainer>
     </div>
   )
