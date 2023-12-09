@@ -56,7 +56,7 @@ export const AdminUserPage = () => {
 
                 <td className='flex items-center px-6 py-4'>
                   <Link
-                    to={`/adminUser/${user.uid}`}
+                    to={`/admin/adminUser/${user.uid}`}
                     type='button'
                     className='font-medium text-blue-600 dark:text-blue-500 hover:underline bg-blue-200 px-2 py-1 rounded mr-2'
                   >

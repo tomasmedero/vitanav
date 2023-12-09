@@ -10,6 +10,9 @@ import {
   AdminEditUserPage,
   CreateHospitalPage,
   PatientsHospitalPage,
+  AdminHospitalsPage,
+  AdminEditHospitalsPage,
+  AdminPage,
 } from '../pages'
 import { useSelector } from 'react-redux'
 
@@ -38,8 +41,18 @@ export const UserRoutes = ({ userLocation }) => {
           {role === 'adminUser' && (
             <>
               <Route path='/createHospital' element={<CreateHospitalPage />} />
-              <Route path='/adminUser' element={<AdminUserPage />} />
-              <Route path='/adminUser/:id' element={<AdminEditUserPage />} />
+              <Route path='/admin' element={<AdminPage />} />
+              <Route path='admin/hospital' element={<AdminHospitalsPage />} />
+              <Route
+                path='admin/hospital/:id'
+                element={<AdminEditHospitalsPage />}
+              />
+              <Route path='admin/adminUser' element={<AdminUserPage />} />
+
+              <Route
+                path='admin/adminUser/:id'
+                element={<AdminEditUserPage />}
+              />
             </>
           )}
 
