@@ -5,7 +5,7 @@ export const hospitalSlice = createSlice({
   initialState: {
     isSaving: false,
     hospitals: [],
-    active: null,
+    active: [],
   },
   reducers: {
     savingNewHospital: (state) => {
@@ -14,7 +14,11 @@ export const hospitalSlice = createSlice({
     setHospitals: (state, action) => {
       state.hospitals = action.payload
     },
+    setHospitalsActive: (state, action) => {
+      state.active = action.payload
+    },
   },
 })
 
-export const { savingNewHospital, setHospitals } = hospitalSlice.actions
+export const { savingNewHospital, setHospitals, setHospitalsActive } =
+  hospitalSlice.actions

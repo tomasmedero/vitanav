@@ -14,6 +14,7 @@ import { startLoadingHospitals } from '../store/hospital/thunks'
 //En pacientes en espera poner un success o algo cuando actualiza la lista de espera
 // Falta solucion lo del estado que no se queda guardado
 //Personalizar los mensajes de error de Firebase
+//TODO Hacer que el numero de paciente en espera no tarde tanto en actualizarse
 
 export const MapPage = () => {
   const customIcon = new Icon({

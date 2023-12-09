@@ -1,27 +1,27 @@
 import { useEffect, useState } from 'react'
-import {
-  searchHospitalByUserId,
-  updateHospitalWaitingPatients,
-} from '../helpers/loadHospitals'
-import { useSelector } from 'react-redux'
+import { updateHospitalWaitingPatients } from '../helpers/loadHospitals'
+import { useDispatch, useSelector } from 'react-redux'
+import { startSavingActiveHospitals } from '../store/hospital/thunks'
 
 export const AdminHospitalPage = () => {
   const [hospitalByUser, setHospitalByUser] = useState([])
   const [countWaiting, setCountWaiting] = useState()
   const { uid } = useSelector((state) => state.auth)
+  const { active } = useSelector((state) => state.hospital)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const searchHospital = async (id) => {
-      const hospitalByUser = await searchHospitalByUserId(id)
-
-      setHospitalByUser(hospitalByUser)
-      setCountWaiting(hospitalByUser.pacientesEnEspera)
+      dispatch(startSavingActiveHospitals(id))
     }
 
     searchHospital(uid)
+  }, [dispatch, uid])
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  useEffect(() => {
+    setHospitalByUser(active)
+    setCountWaiting(active.pacientesEnEspera)
+  }, [active])
 
   const incrementCounter = () => {
     setCountWaiting((prevCount) => prevCount + 1)

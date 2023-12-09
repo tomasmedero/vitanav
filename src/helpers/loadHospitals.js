@@ -15,12 +15,7 @@ export const LoadHospitals = async () => {
 }
 
 export const searchHospitalByUserId = async (userId) => {
-  const collectionRef = collection(FirebaseDB, `hospitales`)
-  const docs = await getDocs(collectionRef)
-  const hospitals = []
-  docs.forEach((doc) => {
-    hospitals.push({ id: doc.id, ...doc.data() })
-  })
+  const hospitals = await LoadHospitals()
 
   const hospital = hospitals.find((hospital) =>
     hospital.idPermitidos.includes(userId)

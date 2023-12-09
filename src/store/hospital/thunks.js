@@ -1,7 +1,14 @@
 import { FirebaseDB } from '../../firebase/config'
 import { addDoc, collection } from 'firebase/firestore/lite'
-import { savingNewHospital, setHospitals } from './hospitalSlice'
-import { LoadHospitals } from '../../helpers/loadHospitals'
+import {
+  savingNewHospital,
+  setHospitalsActive,
+  setHospitals,
+} from './hospitalSlice'
+import {
+  LoadHospitals,
+  searchHospitalByUserId,
+} from '../../helpers/loadHospitals'
 
 export const startSaveHospital = ({ data }) => {
   return async (dispatch) => {
@@ -20,5 +27,13 @@ export const startLoadingHospitals = () => {
     const currentHospitals = await LoadHospitals()
 
     dispatch(setHospitals(currentHospitals))
+  }
+}
+
+export const startSavingActiveHospitals = (idUser) => {
+  return async (dispatch) => {
+    const activeHospital = await searchHospitalByUserId(idUser)
+
+    dispatch(setHospitalsActive(activeHospital))
   }
 }
