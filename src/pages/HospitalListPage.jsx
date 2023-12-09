@@ -21,16 +21,19 @@ export const HospitalListPage = () => {
       <h1 className='text-3xl font-bold text-center my-5'>
         Lista de Hospitales
       </h1>
-      <div className='flex flex-col items-center'>
-        <div className='inline-flex mt-2 xs:mt-0'>
-          <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 rounded-s hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
-            Todos
-          </button>
-          <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 border-0 border-s border-gray-700 rounded-e hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
-            Favoritos
-          </button>
+
+      {uid && (
+        <div className='flex flex-col items-center'>
+          <div className='inline-flex mt-2 xs:mt-0'>
+            <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 rounded-s hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+              Todos
+            </button>
+            <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 border-0 border-s border-gray-700 rounded-e hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+              Favoritos
+            </button>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-10 mb-10'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
