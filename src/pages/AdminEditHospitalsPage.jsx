@@ -4,13 +4,15 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { useForm } from 'react-hook-form'
 import { searchHospitalById, updateHospitalById } from '../firebase/providers'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { startLoadingHospitals } from '../store/hospital/thunks'
 
 export const AdminEditHospitalsPage = () => {
   const { id } = useParams()
   const [hospital, setHospital] = useState({})
   const navigate = useNavigate()
   const { hospitals } = useSelector((state) => state.hospital)
+  const dispatch = useDispatch()
 
   const searchHospital = useCallback(async () => {
     const hospital = await searchHospitalById(id, hospitals)
@@ -42,6 +44,8 @@ export const AdminEditHospitalsPage = () => {
   const onSubmit = async (data) => {
     try {
       await updateHospitalById(id, data)
+      Swal.fire('Hopsital actualizado con éxito', '', 'success')
+      dispatch(startLoadingHospitals())
       navigate('/admin/hospital')
     } catch (error) {
       Swal.fire('Error al actualizar el hospital:', error, 'error')

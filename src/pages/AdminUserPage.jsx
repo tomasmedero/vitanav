@@ -9,12 +9,7 @@ export const AdminUserPage = () => {
   const { users } = useSelector((state) => state.users)
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const allUsers = users
-      setUsersState(allUsers)
-    }
-
-    fetchUsers()
+    setUsersState(users)
   }, [users])
 
   const onDelete = async (id) => {
@@ -38,7 +33,6 @@ export const AdminUserPage = () => {
     user: 'Usuario',
     hospitalAdminUser: 'Admin de Hospital',
   }
-
   return (
     <>
       <h1 className='text-3xl font-bold text-center my-5'>Lista de Usuarios</h1>

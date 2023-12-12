@@ -10,17 +10,16 @@ import PropTypes from 'prop-types'
 import { Icon } from 'leaflet'
 import { useSelector } from 'react-redux'
 //TODO:
-// Falta solucion pacientes en espera no anda
-// Que cuando crea un hospital no tenga que poner la localicazion
-//Sumar pacientes en espera con + y -
+//Con prioridad:
+// Poner para que las listas se puedan ordenar por las columnas
 
 //Sin prioridad:
 //En pacientes en espera poner un success o algo cuando actualiza la lista de espera
 //Esta trayendo cualquier locacion
-//Hacer que el numero de paciente en espera no tarde tanto en actualizarse
 //Personalizar los mensajes de error de Firebase
 //Mejorar el icono de locacion se ve muy feo
 //en el mapa poner mejor lo de los pacientes en espera se ve feo
+//Ver que onda con los iconos si se definen o se hace algo
 //Arreglar el footer en todos lados
 
 export const MapPage = ({ userLocation }) => {

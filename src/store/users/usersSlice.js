@@ -18,7 +18,15 @@ export const usersSlice = createSlice({
     setActiveUser: (state, action) => {
       state.active = action.payload
     },
+    cleanActiveUser: (state) => {
+      state.active = {
+        displayName: '',
+        email: '',
+        role: 'noUser',
+        uid: '',
+      }
+    },
   },
 })
 
-export const { setUsers, setActiveUser } = usersSlice.actions
+export const { setUsers, setActiveUser, cleanActiveUser } = usersSlice.actions

@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { startLogout } from '../store/auth/thunks'
+import { startLogoutUserActive } from '../store/users/thunks'
 
 export const Navbar = () => {
   const [isOpenProfile, setIsOpenProfile] = useState(false)
@@ -42,6 +43,7 @@ export const Navbar = () => {
 
   const onLogout = async () => {
     dispatch(startLogout())
+    dispatch(startLogoutUserActive())
   }
 
   return (

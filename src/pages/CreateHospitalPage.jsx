@@ -1,29 +1,52 @@
 import { useForm } from 'react-hook-form'
-import { startSaveHospital } from '../store/hospital/thunks'
+import {
+  startLoadingHospitals,
+  startSaveHospital,
+} from '../store/hospital/thunks'
 import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import { OpenStreetMapProvider } from 'leaflet-geosearch'
+import { useState } from 'react'
+import { debounce } from 'lodash'
 
 export const CreateHospitalPage = () => {
   const { uid } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
+  const [suggestions, setSuggestions] = useState([])
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       pacientesEnEspera: 0,
       idPermitidos: [uid],
     },
   })
-  const dispatch = useDispatch()
 
-  const onSubmit = (data) => {
+  const provider = new OpenStreetMapProvider()
+
+  const handleSearch = debounce(async (event) => {
+    const results = await provider.search({ query: event.target.value })
+    setSuggestions(results)
+  }, 300)
+
+  const handleSelect = (suggestion) => {
+    setValue('direccion', suggestion.label)
+    setValue('latitud', suggestion.y)
+    setValue('longitud', suggestion.x)
+    setSuggestions([])
+  }
+
+  const onSubmit = async (data) => {
     try {
-      dispatch(startSaveHospital({ data }))
+      await dispatch(startSaveHospital({ data }))
       reset()
       Swal.fire('¡Creado!', 'El hospital ha sido creado con éxito.', 'success')
+      await dispatch(startLoadingHospitals())
     } catch (error) {
       console.error('Error al crear el hospital:', error)
     }
@@ -62,8 +85,10 @@ export const CreateHospitalPage = () => {
             </label>
             <input
               {...register('direccion', {
+                onChange: handleSearch,
                 required: 'Este valor es requerido',
               })}
+              // onChange={handleSearch}
               className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
             />
             {errors.direccion && (
@@ -71,38 +96,22 @@ export const CreateHospitalPage = () => {
                 {errors.direccion.message}
               </p>
             )}
-          </div>
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              Latitud:
-            </label>
-            <input
-              {...register('latitud', {
-                required: 'Este valor es requerido',
-              })}
-              className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-            />
-            {errors.latitud && (
-              <p className='text-red-500 font-bold'>{errors.latitud.message}</p>
+            {suggestions.length > 0 && (
+              <ul className='mt-1 border border-gray-300 rounded-md shadow-sm overflow-auto max-h-60'>
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSelect(suggestion)}
+                    className='p-2 hover:bg-gray-200 cursor-pointer'
+                  >
+                    {suggestion.label}
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
-
-          <div>
-            <label className='block text-sm font-medium text-gray-700'>
-              Longitud:
-            </label>
-            <input
-              {...register('longitud', {
-                required: 'Este valor es requerido',
-              })}
-              className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm'
-            />
-            {errors.longitud && (
-              <p className='text-red-500 font-bold'>
-                {errors.longitud.message}
-              </p>
-            )}
-          </div>
+          <input {...register('latitud')} type='hidden' />
+          <input {...register('longitud')} type='hidden' />
 
           <div>
             <label className='block text-sm font-medium text-gray-700'>

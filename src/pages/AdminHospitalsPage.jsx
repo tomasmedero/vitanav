@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { loadHospitals, deleteHospitalById } from '../firebase/providers'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Swal from 'sweetalert2'
+import { startLoadingHospitals } from '../store/hospital/thunks'
 
 export const AdminHospitalsPage = () => {
   const [hospitalsAdmin, setHospitalsAdmin] = useState([])
   const { hospitals } = useSelector((state) => state.hospital)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     setHospitalsAdmin(hospitals)
@@ -22,6 +24,7 @@ export const AdminHospitalsPage = () => {
         await deleteHospitalById(id)
         const allHospitals = await loadHospitals()
         setHospitalsAdmin(allHospitals)
+        dispatch(startLoadingHospitals())
       }
     } catch (error) {
       Swal.fire('Error!', 'No se pudo eliminar el hospital', 'error')

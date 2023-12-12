@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getUserById, updateUserRole } from '../firebase/providers'
 import Swal from 'sweetalert2'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { startLoadingUsers } from '../store/users/thunks'
 
 export const AdminEditUserPage = () => {
   const { id } = useParams()
@@ -10,6 +11,7 @@ export const AdminEditUserPage = () => {
   const [role, setRole] = useState()
   const navigate = useNavigate()
   const { users } = useSelector((state) => state.users)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const searchUser = async (id, users) => {
@@ -24,6 +26,8 @@ export const AdminEditUserPage = () => {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await updateUserRole(userId, newRole)
+      Swal.fire('Rol actualizado con éxito', '', 'success')
+      dispatch(startLoadingUsers())
       navigate('/admin/user')
     } catch (error) {
       Swal.fire('Error al actualizar el rol del usuario:', error, 'error')

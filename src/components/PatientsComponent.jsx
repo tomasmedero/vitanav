@@ -39,6 +39,27 @@ export const PatientsComponent = () => {
     }
   }
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      switch (event.key) {
+        case '+':
+          incrementCounter()
+          break
+        case '-':
+          decrementCounter()
+          break
+        default:
+          break
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
   return (
     <>
       <div className='divAdmin w-full md:w-1/2 mx-auto min-h-[79.8vh] flex flex-col justify-center'>

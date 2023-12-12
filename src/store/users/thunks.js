@@ -1,5 +1,5 @@
 import { getActiveUser, getAllUsers } from '../../firebase/providers'
-import { setActiveUser, setUsers } from './usersSlice'
+import { cleanActiveUser, setActiveUser, setUsers } from './usersSlice'
 
 export const startLoadingUsers = () => {
   return async (dispatch) => {
@@ -11,7 +11,12 @@ export const startLoadingUsers = () => {
 export const startLoadingActiveUser = () => {
   return async (dispatch) => {
     const currentUser = await getActiveUser()
-
     dispatch(setActiveUser(currentUser))
+  }
+}
+
+export const startLogoutUserActive = () => {
+  return async (dispatch) => {
+    dispatch(cleanActiveUser({}))
   }
 }
