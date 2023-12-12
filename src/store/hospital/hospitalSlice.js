@@ -17,8 +17,33 @@ export const hospitalSlice = createSlice({
     setHospitalsActive: (state, action) => {
       state.active = action.payload
     },
+    submitCount: (state, action) => {
+      return {
+        ...state,
+        active: state.active.map((hospital) =>
+          hospital.id === action.payload.id
+            ? {
+                ...hospital,
+                pacientesEnEspera: action.payload.pacientesEnEspera,
+              }
+            : hospital
+        ),
+        hospitals: state.hospitals.map((hospital) =>
+          hospital.id === action.payload.id
+            ? {
+                ...hospital,
+                pacientesEnEspera: action.payload.pacientesEnEspera,
+              }
+            : hospital
+        ),
+      }
+    },
   },
 })
 
-export const { savingNewHospital, setHospitals, setHospitalsActive } =
-  hospitalSlice.actions
+export const {
+  savingNewHospital,
+  setHospitals,
+  setHospitalsActive,
+  submitCount,
+} = hospitalSlice.actions

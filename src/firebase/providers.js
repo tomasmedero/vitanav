@@ -9,13 +9,16 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import {
+  addDoc,
   collection,
   deleteDoc,
   doc,
   getDoc,
   getDocs,
+  query,
   setDoc,
   updateDoc,
+  where,
 } from 'firebase/firestore/lite'
 
 //////////////////////////////////////////////// LOGIN Y REGISTRO
@@ -131,10 +134,8 @@ export const getAllUsers = async () => {
   return users
 }
 
-export const getUserById = async (uid) => {
-  const userRef = doc(FirebaseDB, 'usersRol', uid)
-  const userDoc = await getDoc(userRef)
-  const user = userDoc.data()
+export const getUserById = async (uid, users) => {
+  const user = users.find((user) => user.uid === uid)
   return user
 }
 
@@ -148,9 +149,21 @@ export const deleteUserById = async (id) => {
   console.log(id, 'No se que hacer con esto')
 }
 
+export const getActiveUser = async () => {
+  const currentUser = FirebaseAuth.currentUser
+
+  if (currentUser) {
+    const { uid } = currentUser
+    const users = await getAllUsers()
+    const user = await getUserById(uid, users)
+
+    return user
+  }
+}
+
 ////////////////////////////////////////////////HOSPITALES
 
-export const LoadHospitals = async () => {
+export const loadHospitals = async () => {
   const collectionRef = collection(FirebaseDB, `hospitales`)
 
   const docs = await getDocs(collectionRef)
@@ -163,10 +176,10 @@ export const LoadHospitals = async () => {
   return hospitals
 }
 
-export const searchHospitalByUserId = async (userId) => {
-  const hospitals = await LoadHospitals()
+export const searchHospitalByUserId = async (userId, hospitals) => {
+  const allHospitals = hospitals
 
-  const hospitalsWithUser = hospitals.filter((hospital) =>
+  const hospitalsWithUser = allHospitals.filter((hospital) =>
     hospital.idPermitidos.includes(userId)
   )
 
@@ -183,9 +196,7 @@ export const updateHospitalWaitingPatients = async (
   })
 }
 
-export const searchHospitalById = async (id) => {
-  const hospitals = await LoadHospitals()
-
+export const searchHospitalById = async (id, hospitals) => {
   const hospital = hospitals.find((hospital) => hospital.id === id)
 
   return hospital
@@ -201,4 +212,39 @@ export const deleteHospitalById = async (id) => {
   const hospitalRef = doc(FirebaseDB, 'hospitales', id)
 
   await deleteDoc(hospitalRef)
+}
+
+export const createHospitalFavByUserId = async (userId, hospitalId) => {
+  const favRef = collection(FirebaseDB, 'favoritos')
+  const favDoc = {
+    userId: userId,
+    hospitalId: hospitalId,
+  }
+  await addDoc(favRef, favDoc)
+}
+
+export const deleteHospitalFavByUserId = async (userId, hospitalId) => {
+  const favRef = collection(FirebaseDB, 'favoritos')
+  const q = query(
+    favRef,
+    where('userId', '==', userId),
+    where('hospitalId', '==', hospitalId)
+  )
+  const querySnapshot = await getDocs(q)
+  querySnapshot.forEach((doc) => {
+    deleteDoc(doc.ref)
+  })
+}
+
+export const searchHospitalFavByUserId = async (id) => {
+  const q = query(
+    collection(FirebaseDB, 'favoritos'),
+    where('userId', '==', id)
+  )
+  const querySnapshot = await getDocs(q)
+  const hospitals = []
+  querySnapshot.forEach((doc) => {
+    hospitals.push(doc.data().hospitalId)
+  })
+  return hospitals
 }

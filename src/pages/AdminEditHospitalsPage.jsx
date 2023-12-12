@@ -1,24 +1,25 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { useForm } from 'react-hook-form'
 import { searchHospitalById, updateHospitalById } from '../firebase/providers'
+import { useSelector } from 'react-redux'
 
 export const AdminEditHospitalsPage = () => {
   const { id } = useParams()
   const [hospital, setHospital] = useState({})
-
   const navigate = useNavigate()
+  const { hospitals } = useSelector((state) => state.hospital)
+
+  const searchHospital = useCallback(async () => {
+    const hospital = await searchHospitalById(id, hospitals)
+    setHospital(hospital)
+  }, [id, hospitals])
 
   useEffect(() => {
-    const searchHospital = async (id) => {
-      const hospital = await searchHospitalById(id)
-      setHospital(hospital)
-    }
-
-    searchHospital(id)
-  }, [id])
+    searchHospital()
+  }, [searchHospital])
 
   const {
     register,

@@ -1,20 +1,50 @@
-import { useEffect, useState } from 'react'
-import { LoadHospitals } from '../firebase/providers'
+import { useCallback, useEffect, useState } from 'react'
+import {
+  createHospitalFavByUserId,
+  deleteHospitalFavByUserId,
+  searchHospitalFavByUserId,
+} from '../firebase/providers'
 import { useSelector } from 'react-redux'
+import { FaStar, FaRegStar } from 'react-icons/fa'
 
 export const HospitalListPage = () => {
-  const [hospitals, setHospitals] = useState([])
+  const [allHospitals, setAllHospitals] = useState([])
+  const [selectedButton, setSelectedButton] = useState('Todos')
+  const [favHospitals, setFavHospitals] = useState({})
+  const { hospitals } = useSelector((state) => state.hospital)
+  const { uid } = useSelector((state) => state.auth)
+
+  const fetchHospitals = useCallback(async () => {
+    const allHospitals = hospitals
+    setAllHospitals(allHospitals)
+  }, [hospitals])
+
+  const fetchHospitalsFavorites = useCallback(async () => {
+    if (uid) {
+      const favUserHospitals = await searchHospitalFavByUserId(uid)
+      setFavHospitals(favUserHospitals)
+    }
+  }, [uid])
 
   useEffect(() => {
-    const fetchHospitals = async () => {
-      const allHospitals = await LoadHospitals()
-      setHospitals(allHospitals)
-    }
-
     fetchHospitals()
-  }, [])
+    fetchHospitalsFavorites()
+  }, [fetchHospitals, fetchHospitalsFavorites])
 
-  const { uid } = useSelector((state) => state.auth)
+  const handleFavClick = async (hospital) => {
+    if (favHospitals[hospital.id]) {
+      const newFavHospitals = { ...favHospitals }
+      delete newFavHospitals[hospital.id]
+      setFavHospitals(newFavHospitals)
+      await deleteHospitalFavByUserId(uid, hospital.id)
+    } else {
+      await createHospitalFavByUserId(uid, hospital.id)
+      setFavHospitals({
+        ...favHospitals,
+        [hospital.id]: true,
+      })
+    }
+  }
 
   return (
     <>
@@ -25,10 +55,20 @@ export const HospitalListPage = () => {
       {uid && (
         <div className='flex flex-col items-center'>
           <div className='inline-flex mt-2 xs:mt-0'>
-            <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 rounded-s hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+            <button
+              className={`flex items-center justify-center px-3 h-8 text-sm font-medium text-white rounded-s hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                selectedButton === 'Todos' ? 'bg-blue-800' : 'bg-blue-600'
+              }`}
+              onClick={() => setSelectedButton('Todos')}
+            >
               Todos
             </button>
-            <button className='flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-blue-800 border-0 border-s border-gray-700 rounded-e hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'>
+            <button
+              className={`flex items-center justify-center px-3 h-8 text-sm font-medium text-white border-0 border-s border-gray-700 rounded-e hover:bg-blue-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                selectedButton === 'Favoritos' ? 'bg-blue-800' : 'bg-blue-600'
+              }`}
+              onClick={() => setSelectedButton('Favoritos')}
+            >
               Favoritos
             </button>
           </div>
@@ -55,7 +95,7 @@ export const HospitalListPage = () => {
             </tr>
           </thead>
           <tbody>
-            {hospitals.map((hospital) => (
+            {allHospitals.map((hospital) => (
               <tr
                 key={hospital.id}
                 className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'
@@ -73,10 +113,14 @@ export const HospitalListPage = () => {
                 {uid && (
                   <td className='flex items-center px-6 py-4'>
                     <button
-                      onClick={() => console.log('Fav')}
-                      className='font-medium text-red-600 dark:text-red-500 hover:underline bg-red-200 px-2 py-1 rounded'
+                      onClick={() => handleFavClick(hospital)}
+                      className='text-blue-500 hover:text-blue-700'
                     >
-                      Fav
+                      {favHospitals[hospital.id] ? (
+                        <FaStar fill='blue' />
+                      ) : (
+                        <FaRegStar fill='blue' />
+                      )}
                     </button>
                   </td>
                 )}

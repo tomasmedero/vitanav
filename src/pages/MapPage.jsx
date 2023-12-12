@@ -6,15 +6,13 @@ import {
   ZoomControl,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-
-import { useDispatch, useSelector } from 'react-redux'
-import { useEffect } from 'react'
-import { startLoadingHospitals } from '../store/hospital/thunks'
 import PropTypes from 'prop-types'
 import { Icon } from 'leaflet'
-// TODO:
-// Falta solucion lo del estado que no se queda guardado
+import { useSelector } from 'react-redux'
+//TODO:
+// Falta solucion pacientes en espera no anda
 // Que cuando crea un hospital no tenga que poner la localicazion
+//Sumar pacientes en espera con + y -
 
 //Sin prioridad:
 //En pacientes en espera poner un success o algo cuando actualiza la lista de espera
@@ -23,8 +21,11 @@ import { Icon } from 'leaflet'
 //Personalizar los mensajes de error de Firebase
 //Mejorar el icono de locacion se ve muy feo
 //en el mapa poner mejor lo de los pacientes en espera se ve feo
+//Arreglar el footer en todos lados
 
 export const MapPage = ({ userLocation }) => {
+  const { hospitals } = useSelector((state) => state.hospital)
+
   const redIcon = new Icon({
     iconUrl: ' /markerPosition.svg',
     iconSize: [34, 34],
@@ -49,13 +50,6 @@ export const MapPage = ({ userLocation }) => {
     iconUrl: '/iconMyLocation.png',
     iconSize: [22, 22],
   })
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(startLoadingHospitals())
-  }, [dispatch])
-
-  const { hospitals } = useSelector((state) => state.hospital)
 
   return (
     <div className='w-full h-full absolute top-0 left-0 z-1'>

@@ -19,7 +19,9 @@ import { useSelector } from 'react-redux'
 export const UserRoutes = ({ userLocation }) => {
   const location = useLocation()
 
-  const { role } = useSelector((state) => state.auth)
+  const {
+    active: { role },
+  } = useSelector((state) => state.users)
 
   const isMap = location.pathname === '/map'
   return (

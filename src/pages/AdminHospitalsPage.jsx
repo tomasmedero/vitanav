@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { LoadHospitals, deleteHospitalById } from '../firebase/providers'
+import { loadHospitals, deleteHospitalById } from '../firebase/providers'
+import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
 export const AdminHospitalsPage = () => {
-  const [hospitals, setHospitals] = useState([])
+  const [hospitalsAdmin, setHospitalsAdmin] = useState([])
+  const { hospitals } = useSelector((state) => state.hospital)
 
   useEffect(() => {
-    const fetchHospitals = async () => {
-      const allHospitals = await LoadHospitals()
-      setHospitals(allHospitals)
-    }
-
-    fetchHospitals()
-  }, [])
+    setHospitalsAdmin(hospitals)
+  }, [hospitals])
 
   const onDelete = async (id) => {
     try {
@@ -22,17 +20,19 @@ export const AdminHospitalsPage = () => {
         )
       ) {
         await deleteHospitalById(id)
-        const allHospitals = await LoadHospitals()
-        setHospitals(allHospitals)
+        const allHospitals = await loadHospitals()
+        setHospitalsAdmin(allHospitals)
       }
     } catch (error) {
-      console.log('No se pudo eliminar el hospital')
+      Swal.fire('Error!', 'No se pudo eliminar el hospital', 'error')
     }
   }
 
   return (
     <>
-      <h1 className='text-3xl font-bold text-center my-5'>Lista de Usuarios</h1>
+      <h1 className='text-3xl font-bold text-center my-5'>
+        Lista de Hospitales
+      </h1>
       <div className='relative overflow-x-auto shadow-md sm:rounded-lg mt-10 mb-10'>
         <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
@@ -59,7 +59,7 @@ export const AdminHospitalsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {hospitals.map((hospital) => (
+            {hospitalsAdmin.map((hospital) => (
               <tr
                 key={hospital.id}
                 className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'

@@ -4,14 +4,36 @@ import { AuthRoutes } from '../auth/routes/AuthRoutes'
 import { useCheckAuth } from '../hooks/useCheckAuth'
 import { UserRoutes } from './UserRoutes'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { startLoadingHospitals } from '../store/hospital/thunks'
+import {
+  startLoadingActiveUser,
+  startLoadingUsers,
+} from '../store/users/thunks'
 
 export const AppRouter = () => {
   const status = useCheckAuth()
   const [userLocation, setUserLocation] = useState(null)
+  const { uid } = useSelector((state) => state.auth)
+  const [hospAndUsersLoad, sethospAndUsersLoad] = useState(false)
 
   useEffect(() => {
     getGeoLocation()
   }, [])
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(startLoadingHospitals())
+    dispatch(startLoadingUsers())
+    sethospAndUsersLoad(true)
+  }, [dispatch])
+
+  useEffect(() => {
+    if (hospAndUsersLoad && uid) {
+      if (uid) dispatch(startLoadingActiveUser(uid))
+    }
+  }, [dispatch, uid, hospAndUsersLoad])
 
   const getGeoLocation = () => {
     if (navigator.geolocation) {

@@ -2,22 +2,24 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getUserById, updateUserRole } from '../firebase/providers'
 import Swal from 'sweetalert2'
+import { useSelector } from 'react-redux'
 
 export const AdminEditUserPage = () => {
   const { id } = useParams()
   const [user, setUser] = useState({})
   const [role, setRole] = useState()
   const navigate = useNavigate()
+  const { users } = useSelector((state) => state.users)
 
   useEffect(() => {
-    const searchUser = async (id) => {
-      const user = await getUserById(id)
+    const searchUser = async (id, users) => {
+      const user = await getUserById(id, users)
       setUser(user)
       setRole(user.role)
     }
 
-    searchUser(id)
-  }, [id])
+    searchUser(id, users)
+  }, [id, users])
 
   const handleRoleChange = async (userId, newRole) => {
     try {

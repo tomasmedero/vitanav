@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react'
-import { updateHospitalWaitingPatients } from '../firebase/providers'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { startSavingNewWaitingPatients } from '../store/hospital/thunks'
 
 export const PatientsComponent = () => {
-  const [hospitalByUser, setHospitalByUser] = useState([])
+  const [hospitalByUser, setHospitalByUser] = useState({})
   const [countWaiting, setCountWaiting] = useState()
   const { active } = useSelector((state) => state.hospital)
   const { id } = useParams()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    let hospital
-    if (id) {
-      hospital = active.find((hospital) => hospital.id === id)
+    const hospital = active.find((hospital) => hospital.id === id) || active[0]
+    if (hospital) {
+      setHospitalByUser(hospital)
+      setCountWaiting(hospital.pacientesEnEspera)
     }
-    hospital = hospital || active
-    setHospitalByUser(hospital)
-    setCountWaiting(hospital.pacientesEnEspera)
   }, [active, id])
 
   const incrementCounter = () => {
@@ -34,7 +33,7 @@ export const PatientsComponent = () => {
     }
 
     try {
-      updateHospitalWaitingPatients(hospitalByUser.id, countWaiting)
+      dispatch(startSavingNewWaitingPatients(hospitalByUser.id, countWaiting))
     } catch (error) {
       console.error('Error al actualizar pacientes:', error)
     }

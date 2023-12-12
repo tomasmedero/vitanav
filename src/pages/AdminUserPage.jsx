@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react'
 import { deleteUserById, getAllUsers } from '../firebase/providers'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 export const AdminUserPage = () => {
-  const [users, setUsers] = useState([])
+  const [usersState, setUsersState] = useState([])
+
+  const { users } = useSelector((state) => state.users)
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const allUsers = await getAllUsers()
-      setUsers(allUsers)
+      const allUsers = users
+      setUsersState(allUsers)
     }
 
     fetchUsers()
-  }, [])
+  }, [users])
 
   const onDelete = async (id) => {
     try {
@@ -23,7 +26,7 @@ export const AdminUserPage = () => {
       ) {
         await deleteUserById(id)
         const allUsers = await getAllUsers()
-        setUsers(allUsers)
+        setUsersState(allUsers)
       }
     } catch (error) {
       console.error('No se pudo eliminar el usuario')
@@ -56,7 +59,7 @@ export const AdminUserPage = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => (
+            {usersState.map((user) => (
               <tr
                 key={user.uid}
                 className='bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'

@@ -4,8 +4,13 @@ import {
   savingNewHospital,
   setHospitalsActive,
   setHospitals,
+  submitCount,
 } from './hospitalSlice'
-import { LoadHospitals, searchHospitalByUserId } from '../../firebase/providers'
+import {
+  loadHospitals,
+  searchHospitalByUserId,
+  updateHospitalWaitingPatients,
+} from '../../firebase/providers'
 
 export const startSaveHospital = ({ data }) => {
   return async (dispatch) => {
@@ -21,15 +26,24 @@ export const startSaveHospital = ({ data }) => {
 
 export const startLoadingHospitals = () => {
   return async (dispatch) => {
-    const currentHospitals = await LoadHospitals()
+    const currentHospitals = await loadHospitals()
 
     dispatch(setHospitals(currentHospitals))
   }
 }
 
-export const startSavingActiveHospitals = (idUser) => {
+export const startSavingActiveHospitals = (idUser, hospitals) => {
   return async (dispatch) => {
-    const activeHospital = await searchHospitalByUserId(idUser)
+    const activeHospital = await searchHospitalByUserId(idUser, hospitals)
     dispatch(setHospitalsActive(activeHospital))
+  }
+}
+
+export const startSavingNewWaitingPatients = (hospitalId, waitingPatients) => {
+  return async (dispatch) => {
+    await updateHospitalWaitingPatients(hospitalId, waitingPatients)
+    const countPatient = { id: hospitalId, pacientesEnEspera: waitingPatients }
+
+    dispatch(submitCount(countPatient))
   }
 }
